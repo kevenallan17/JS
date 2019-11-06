@@ -28,6 +28,8 @@ function imc(altura,peso,sexo){
     }
     return result
 }
+const box ={'Abaixo do Peso':'border border-warning bg-warning text-white','Peso Normal':'border border-sucess bg-success text-white',
+'Marginalmente Acima do Peso':'border border-warning bg-warning text-white','Acima do Peso Ideal':'border border-warning bg-warning text-white','Obeso':'border border-danger bg-danger text-white'}
 
 function calculadoraDeIMC(){
     let alt = document.querySelector('#altura').value
@@ -35,6 +37,23 @@ function calculadoraDeIMC(){
     let sex = document.querySelector('input:checked').value
     let res=imc(alt,pes,sex)
     document.querySelector('#imc').value=res
+    showbox(res)
 }
+document.addEventListener('keyup',function(event){
+    if (event.key=='Enter'){
+        calculadoraDeIMC()
 
+    }else if (event.key=='Escape'){
+        let alt = document.querySelector('#altura').value=''
+        let pes = document.querySelector('#peso').value=''
+        document.querySelector('#imc').value=''
+        const imc = document.querySelector('#imc')
+        imc.setAttribute('class',`form-control form-control-lg`)
+        let sex = document.querySelector('input[id=feminino]').checked=true
+    }
+})
+function showbox(resultado){
+    const imc = document.querySelector('#imc')
+    imc.setAttribute('class',`form-control form-control-lg ${box[resultado]}`)
+}
 
