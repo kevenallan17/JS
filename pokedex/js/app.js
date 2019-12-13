@@ -1,6 +1,8 @@
 const pokedex = document.querySelector('section')
 const filter_type=document.querySelector('#filter-type')
 const filter_name=document.querySelector('#filter-name')
+const sort_type = document.querySelector('#sort-type')
+
 let array
 let numero_pokemon
 function exibir(array){
@@ -101,5 +103,54 @@ filter_name.addEventListener('keydown',function(){
     }else{
     exibir(array)
     }
+  }
+})
+
+function ordenar_alf(valor){
+  let vetor=[]
+  let order=[]
+  if (valor=='crescente'){
+    for (let pokemon of Lista_Pokemons){
+      vetor.push(pokemon.name)
+    }
+    vetor.sort()
+    for (let nome of vetor){
+      for (let poke of Lista_Pokemons){
+        if (nome==poke.name){
+          order.push(poke)
+        }
+      }
+    }
+  }else if (valor=='decrescente'){
+    for (let pokemon of Lista_Pokemons){
+      vetor.push(pokemon.name)
+    }
+    vetor.sort()
+    vetor.reverse()
+    for (let nome of vetor){
+      for (let poke of Lista_Pokemons){
+        if (nome==poke.name){
+          order.push(poke)
+        }
+      }
+    }
+  }
+  return order
+}
+
+sort_type.addEventListener('click',function(){
+  let ordem
+  let lista_ordem
+  if (sort_type.value=='crescente'){
+    exibir(Lista_Pokemons)
+  }else if (sort_type.value=='decrescente'){
+    ordem=Lista_Pokemons.reverse()
+    exibir(ordem)
+  }else if (sort_type.value=="alfa-crescente"){
+    lista_ordem=ordenar_alf('crescente')
+    exibir(lista_ordem)
+  }else if (sort_type.value=='alfa-decrescente'){
+    lista_ordem=ordenar_alf('decrescente')
+    exibir(lista_ordem)
   }
 })
