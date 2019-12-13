@@ -106,29 +106,29 @@ filter_name.addEventListener('keydown',function(){
   }
 })
 
-function ordenar_alf(valor){
+function ordenar_alf(valor,array){
   let vetor=[]
   let order=[]
   if (valor=='crescente'){
-    for (let pokemon of Lista_Pokemons){
+    for (let pokemon of array){
       vetor.push(pokemon.name)
     }
     vetor.sort()
     for (let nome of vetor){
-      for (let poke of Lista_Pokemons){
+      for (let poke of array){
         if (nome==poke.name){
           order.push(poke)
         }
       }
     }
   }else if (valor=='decrescente'){
-    for (let pokemon of Lista_Pokemons){
+    for (let pokemon of array){
       vetor.push(pokemon.name)
     }
     vetor.sort()
     vetor.reverse()
     for (let nome of vetor){
-      for (let poke of Lista_Pokemons){
+      for (let poke of array){
         if (nome==poke.name){
           order.push(poke)
         }
@@ -141,16 +141,34 @@ function ordenar_alf(valor){
 sort_type.addEventListener('click',function(){
   let ordem
   let lista_ordem
-  if (sort_type.value=='crescente'){
-    exibir(Lista_Pokemons)
-  }else if (sort_type.value=='decrescente'){
-    ordem=Lista_Pokemons.reverse()
-    exibir(ordem)
-  }else if (sort_type.value=="alfa-crescente"){
-    lista_ordem=ordenar_alf('crescente')
-    exibir(lista_ordem)
-  }else if (sort_type.value=='alfa-decrescente'){
-    lista_ordem=ordenar_alf('decrescente')
-    exibir(lista_ordem)
+  let filtro
+  if (filter_type.value=='all'){
+    if (sort_type.value=='crescente'){
+      exibir(Lista_Pokemons)
+    }else if (sort_type.value=='decrescente'){
+      ordem=Lista_Pokemons.reverse()
+      exibir(ordem)
+    }else if (sort_type.value=="alfa-crescente"){
+      lista_ordem=ordenar_alf('crescente',Lista_Pokemons)
+      exibir(lista_ordem)
+    }else if (sort_type.value=='alfa-decrescente'){
+      lista_ordem=ordenar_alf('decrescente',Lista_Pokemons)
+      exibir(lista_ordem)
+    }
+  }else{
+    filtro=Lista_Pokemons.filter(poke=>poke.type.includes(filter_type.value))
+    if (sort_type.value=='crescente'){
+      exibir(filtro)
+    }else if (sort_type.value=='decrescente'){
+      filtro.sort()
+      ordem=filtro.reverse()
+      exibir(ordem)
+    }else if (sort_type.value=="alfa-crescente"){
+      lista_ordem=ordenar_alf('crescente',filtro)
+      exibir(lista_ordem)
+    }else if (sort_type.value=='alfa-decrescente'){
+      lista_ordem=ordenar_alf('decrescente',filtro)
+      exibir(lista_ordem)
   }
+}
 })
